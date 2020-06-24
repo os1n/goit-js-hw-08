@@ -38,30 +38,27 @@ const insertItems = function (objects, list) {
     //console.log(element);
     itemsList.push(li);
   });
-  console.log(itemsList);
-  // !! insert array to the ul
   list.append(...itemsList);
 };
 
 insertItems(galleryItems, galleryRef);
 
 const galleryItemRef = document.querySelectorAll(".gallery__link");
-
-//console.log("GalleryItem = ", galleryItemRef);
-galleryRef.addEventListener("click", openModal);
-
-// add modal window appearence function
-
 const lightBoxImageRef = document.querySelector(".lightbox__image");
 
+// add modal window appearence function
+galleryRef.addEventListener("click", openModal);
+
 function openModal(event) {
-  //console.log(event.target.dataset.index);
-  currentImg = event.target.dataset.index;
-  console.log(currentImg);
-  event.preventDefault();
-  lightBoxRef.classList.add("is-open");
-  lightBoxImageRef.src = event.target.dataset.source;
-  lightBoxImageRef.alt = event.target.alt;
+  if (event.target.classList.contains("gallery__image")) {
+    currentImg = parseInt(event.target.dataset.index);
+    event.preventDefault();
+    lightBoxRef.classList.add("is-open");
+    lightBoxImageRef.src = event.target.dataset.source;
+    lightBoxImageRef.alt = event.target.alt;
+  } else {
+    event.preventDefault();
+  }
 }
 
 const closeModalBtnRef = document.querySelector(
@@ -78,7 +75,6 @@ function closeModal() {
 
 const lightBoxContentRef = document.querySelector(".lightbox__content");
 const lightBoxOverlayRef = document.querySelector(".lightbox__overlay");
-//console.log(lightBoxOverlayRef);
 
 lightBoxContentRef.addEventListener("click", lightBoxOverlayHandler);
 
@@ -100,27 +96,27 @@ function keyPressHandler(event) {
   if (event.key === "Escape") closeModal();
 
   if (event.key === "ArrowLeft") prevImage();
-
   if (event.key === "ArrowRight") nextImage();
 }
 
 function prevImage() {
-  //console.log(itemsList[currentImg - 1].children[0].children[0]);
-  console.log(currentImg);
   if (currentImg > 0) {
     currentImg -= 1;
   }
-  lightBoxImageRef.src = itemsList[currentImg].children[0].children[0].dataset.source;
+  lightBoxImageRef.src =
+    itemsList[currentImg].children[0].children[0].dataset.source;
   lightBoxImageRef.alt = itemsList[currentImg].children[0].children[0].alt;
 }
 
 function nextImage() {
-  if (currentImg < itemsList.length) {
+  //console.log(itemsList[currentImg - 1].children[0].children[0]);
+  if (currentImg < itemsList.length - 1) {
     currentImg += 1;
+    lightBoxImageRef.src =
+      itemsList[currentImg].children[0].children[0].dataset.source;
+    lightBoxImageRef.alt =
+      itemsList[currentImg].children[0].children[0].alt;
   }
-  console.log(currentImg);
-  lightBoxImageRef.src = itemsList[currentImg].children[0].children[0].dataset.source;
-  lightBoxImageRef.alt = itemsList[currentImg].children[0].children[0].alt;
 }
 
 // DONE
