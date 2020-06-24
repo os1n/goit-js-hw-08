@@ -107,22 +107,20 @@ function keyPressHandler(event) {
 function prevImage() {
   //console.log(itemsList[currentImg - 1].children[0].children[0]);
   console.log(currentImg);
-  lightBoxImageRef.src =
-    itemsList[currentImg - 1].children[0].children[0].dataset.source;
-  lightBoxImageRef.alt = itemsList[currentImg - 1].children[0].children[0].alt;
-  if (currentImg > 1) {
+  if (currentImg > 0) {
     currentImg -= 1;
   }
+  lightBoxImageRef.src = itemsList[currentImg].children[0].children[0].dataset.source;
+  lightBoxImageRef.alt = itemsList[currentImg].children[0].children[0].alt;
 }
 
 function nextImage() {
-  lightBoxImageRef.src =
-    itemsList[currentImg - 1].children[0].children[0].dataset.source;
-  lightBoxImageRef.alt = itemsList[currentImg - 1].children[0].children[0].alt;
-  console.log(currentImg);
-  if (currentImg < itemsList.length - 1) {
+  if (currentImg < itemsList.length) {
     currentImg += 1;
   }
+  console.log(currentImg);
+  lightBoxImageRef.src = itemsList[currentImg].children[0].children[0].dataset.source;
+  lightBoxImageRef.alt = itemsList[currentImg].children[0].children[0].alt;
 }
 
 // DONE
