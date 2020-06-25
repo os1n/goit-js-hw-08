@@ -7,9 +7,15 @@ console.log(`HW-08 Task 01`);
 
 const galleryRef = document.querySelector(".js-gallery");
 const lightBoxRef = document.querySelector(".lightbox");
+const lightBoxImageRef = document.querySelector(".lightbox__image");
+const itemsList = [];
+const closeModalBtnRef = document.querySelector(
+  'button[data-action="close-lightbox"]'
+  );
 
 let currentImg = 0;
-const itemsList = [];
+
+closeModalBtnRef.addEventListener("click", closeModal);
 
 // Number of elements
 
@@ -43,11 +49,8 @@ const insertItems = function (objects, list) {
 
 insertItems(galleryItems, galleryRef);
 
-const galleryItemRef = document.querySelectorAll(".gallery__link");
-const lightBoxImageRef = document.querySelector(".lightbox__image");
-
-// add modal window appearence function
 galleryRef.addEventListener("click", openModal);
+
 
 function openModal(event) {
   if (event.target.classList.contains("gallery__image")) {
@@ -56,16 +59,9 @@ function openModal(event) {
     lightBoxRef.classList.add("is-open");
     lightBoxImageRef.src = event.target.dataset.source;
     lightBoxImageRef.alt = event.target.alt;
-  } else {
-    event.preventDefault();
   }
 }
 
-const closeModalBtnRef = document.querySelector(
-  'button[data-action="close-lightbox"]'
-);
-
-closeModalBtnRef.addEventListener("click", closeModal);
 
 function closeModal() {
   lightBoxRef.classList.remove("is-open");
@@ -79,12 +75,7 @@ const lightBoxOverlayRef = document.querySelector(".lightbox__overlay");
 lightBoxContentRef.addEventListener("click", lightBoxOverlayHandler);
 
 function lightBoxOverlayHandler(event) {
-  console.log(
-    "event.Target === lightBoxImageRef",
-    event.Target === lightBoxImageRef
-  );
   if (event.target === event.currentTarget) {
-    console.log("Need to close modal");
     closeModal();
   }
 }
@@ -92,7 +83,7 @@ function lightBoxOverlayHandler(event) {
 window.addEventListener("keydown", keyPressHandler);
 
 function keyPressHandler(event) {
-  console.log(event.key);
+  //console.log(event.key);
   if (event.key === "Escape") closeModal();
 
   if (event.key === "ArrowLeft") prevImage();
@@ -103,19 +94,18 @@ function prevImage() {
   if (currentImg > 0) {
     currentImg -= 1;
   }
-  lightBoxImageRef.src =
-    itemsList[currentImg].children[0].children[0].dataset.source;
-  lightBoxImageRef.alt = itemsList[currentImg].children[0].children[0].alt;
+  //console.log(galleryItems[currentImg].description);
+  lightBoxImageRef.src = galleryItems[currentImg].original;
+  lightBoxImageRef.alt = galleryItems[currentImg].description;
 }
 
 function nextImage() {
   //console.log(itemsList[currentImg - 1].children[0].children[0]);
   if (currentImg < itemsList.length - 1) {
     currentImg += 1;
-    lightBoxImageRef.src =
-      itemsList[currentImg].children[0].children[0].dataset.source;
-    lightBoxImageRef.alt =
-      itemsList[currentImg].children[0].children[0].alt;
+    //console.log(galleryItems[currentImg].description);
+    lightBoxImageRef.src = galleryItems[currentImg].original;
+    lightBoxImageRef.alt = galleryItems[currentImg].description;
   }
 }
 
